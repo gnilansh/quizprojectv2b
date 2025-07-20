@@ -1,0 +1,165 @@
+~/workspace$ celery -A celery_worker.celery worker --loglevel=info
+ 
+ -------------- celery@d791b34f24fa v5.4.0 (opalescent)
+--- ***** ----- 
+-- ******* ---- Linux-6.2.16-x86_64-with-glibc2.40 2025-07-14 12:14:53
+- *** --- * --- 
+- ** ---------- [config]
+- ** ---------- .> app:         tasks:0x7fbd4a9e9110
+- ** ---------- .> transport:   redis://admin:**@redis-19711.c267.us-east-1-4.ec2.redns.redis-cloud.com:19711/0
+- ** ---------- .> results:     redis://admin:**@redis-19711.c267.us-east-1-4.ec2.redns.redis-cloud.com:19711/0
+- *** --- * --- .> concurrency: 8 (prefork)
+-- ******* ---- .> task events: OFF (enable -E to monitor tasks in this worker)
+--- ***** ----- 
+ -------------- [queues]
+                .> celery           exchange=celery(direct) key=celery
+                
+
+[tasks]
+  . celery_worker.add
+  . celery_worker.send_monthly_report
+  . celery_worker.send_reminder_emails
+
+[2025-07-14 12:14:53,482: WARNING/MainProcess] /home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/celery/worker/consumer/consumer.py:508: CPendingDeprecationWarning: The broker_connection_retry configuration setting will no longer determine
+whether broker connection retries are made during startup in Celery 6.0 and above.
+If you wish to retain the existing behavior for retrying connections on startup,
+you should set broker_connection_retry_on_startup to True.
+  warnings.warn(
+
+[2025-07-14 12:14:56,104: INFO/MainProcess] Connected to redis://admin:**@redis-19711.c267.us-east-1-4.ec2.redns.redis-cloud.com:19711/0
+[2025-07-14 12:14:56,105: WARNING/MainProcess] /home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/celery/worker/consumer/consumer.py:508: CPendingDeprecationWarning: The broker_connection_retry configuration setting will no longer determine
+whether broker connection retries are made during startup in Celery 6.0 and above.
+If you wish to retain the existing behavior for retrying connections on startup,
+you should set broker_connection_retry_on_startup to True.
+  warnings.warn(
+
+[2025-07-14 12:14:57,286: INFO/MainProcess] mingle: searching for neighbors
+[2025-07-14 12:15:05,121: CRITICAL/MainProcess] Unrecoverable error: OperationalError('max number of clients reached')
+Traceback (most recent call last):
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/kombu/utils/functional.py", line 32, in __call__
+    return self.__value__
+           ^^^^^^^^^^^^^^
+AttributeError: 'ChannelPromise' object has no attribute '__value__'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/kombu/transport/virtual/base.py", line 951, in create_channel
+    return self._avail_channels.pop()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+IndexError: pop from empty list
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/kombu/connection.py", line 472, in _reraise_as_library_errors
+    yield
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/kombu/connection.py", line 459, in _ensure_connection
+    return retry_over_time(
+           ^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/kombu/utils/functional.py", line 318, in retry_over_time
+    return fun(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/kombu/connection.py", line 938, in _connection_factory
+    self._connection = self._establish_connection()
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/kombu/connection.py", line 860, in _establish_connection
+    conn = self.transport.establish_connection()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/kombu/transport/virtual/base.py", line 975, in establish_connection
+    self._avail_channels.append(self.create_channel(self))
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/kombu/transport/virtual/base.py", line 953, in create_channel
+    channel = self.Channel(connection)
+              ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/kombu/transport/redis.py", line 751, in __init__
+    self.client.ping()
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/redis/commands/core.py", line 1212, in ping
+    return self.execute_command("PING", **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/redis/client.py", line 559, in execute_command
+    return self._execute_command(*args, **options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/redis/client.py", line 565, in _execute_command
+    conn = self.connection or pool.get_connection(command_name, **options)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/redis/connection.py", line 1422, in get_connection
+    connection.connect()
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/redis/connection.py", line 369, in connect
+    self.on_connect()
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/redis/connection.py", line 434, in on_connect
+    auth_response = self.read_response()
+                    ^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/redis/connection.py", line 592, in read_response
+    response = self._parser.read_response(disable_decoding=disable_decoding)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/redis/_parsers/resp2.py", line 15, in read_response
+    result = self._read_response(disable_decoding=disable_decoding)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/redis/_parsers/resp2.py", line 38, in _read_response
+    raise error
+redis.exceptions.ConnectionError: max number of clients reached
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/celery/worker/worker.py", line 202, in start
+    self.blueprint.start(self)
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/celery/bootsteps.py", line 116, in start
+    step.start(parent)
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/celery/bootsteps.py", line 365, in start
+    return self.obj.start()
+           ^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/celery/worker/consumer/consumer.py", line 340, in start
+    blueprint.start(self)
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/celery/bootsteps.py", line 116, in start
+    step.start(parent)
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/celery/worker/consumer/mingle.py", line 37, in start
+    self.sync(c)
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/celery/worker/consumer/mingle.py", line 41, in sync
+    replies = self.send_hello(c)
+              ^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/celery/worker/consumer/mingle.py", line 54, in send_hello
+    replies = inspect.hello(c.hostname, our_revoked._data) or {}
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/celery/app/control.py", line 389, in hello
+    return self._request('hello', from_node=from_node, revoked=revoked)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/celery/app/control.py", line 106, in _request
+    return self._prepare(self.app.control.broadcast(
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/celery/app/control.py", line 776, in broadcast
+    return self.mailbox(conn)._broadcast(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/kombu/pidbox.py", line 337, in _broadcast
+    self._publish(command, arguments, destination=destination,
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/kombu/pidbox.py", line 305, in _publish
+    producer.publish(
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/kombu/messaging.py", line 190, in publish
+    return _publish(
+           ^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/kombu/connection.py", line 556, in _ensured
+    return fun(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/kombu/messaging.py", line 200, in _publish
+    channel = self.channel
+              ^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/kombu/messaging.py", line 224, in _get_channel
+    channel = self._channel = channel()
+                              ^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/kombu/utils/functional.py", line 34, in __call__
+    value = self.__value__ = self.__contract__()
+                             ^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/kombu/messaging.py", line 240, in <lambda>
+    channel = ChannelPromise(lambda: connection.default_channel)
+                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/kombu/connection.py", line 957, in default_channel
+    self._ensure_connection(**conn_opts)
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/kombu/connection.py", line 458, in _ensure_connection
+    with ctx():
+  File "/nix/store/clx0mcir7qw8zk36zbr4jra789g3knf6-python3-3.11.10/lib/python3.11/contextlib.py", line 158, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/kombu/connection.py", line 476, in _reraise_as_library_errors
+    raise ConnectionError(str(exc)) from exc
+kombu.exceptions.OperationalError: max number of clients reached
+~/workspace$ 
